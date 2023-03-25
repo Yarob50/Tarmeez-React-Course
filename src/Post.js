@@ -1,4 +1,4 @@
-export default function Post({ title, body, count }) {
+export default function Post() {
   return (
     <div
       style={{
@@ -8,10 +8,9 @@ export default function Post({ title, body, count }) {
         margin: "25px",
       }}
     >
-      <h1>{count}</h1>
-      <h2>{title}</h2>
+      <h2>This is the post Title</h2>
       <hr />
-      <p>{body}</p>
+      <p>This is the post body</p>
     </div>
   );
 }
