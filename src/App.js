@@ -17,13 +17,13 @@ function App() {
         >
           {/* == POSTS CONTAINER == */}
           <div style={{ width: "70%" }}>
-            <Post />
-            <Post />
-            <Post />
-            <Post />
-            <Post />
-            <Post />
-            <Post />
+            <Post
+              count={20}
+              title="أكاديمية ترميز"
+              body="أكاديمية مخصصة لتعليم البرمجة بمختلف لغاتها و تقنياتها"
+            />
+            <Post title="hello world" body="this is the hello world article" />
+            <Post title="Post 3" body="this is the body of post 3" />
           </div>
 
           <div style={{ width: "30%", marginTop: "25px" }}>
