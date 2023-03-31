@@ -1,17 +1,18 @@
 import { useState } from "react";
+let name = "Ahmad";
 
 export default function MyButton() {
-  const [name, setValue] = useState("Ahmad");
+  console.log("render");
+  const [name, setName] = useState("Ahmad");
 
   function buttonClicked() {
-    if (name == "Ahmad") {
-      setValue("Yarob");
+    if (name == "Yarob") {
+      setName("Ahmad");
     } else {
-      setValue("Ahmad");
+      setName("Yarob");
     }
   }
 
-  console.log(name);
   return (
     <div>
       <button onClick={buttonClicked}>Click Me</button>
