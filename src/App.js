@@ -1,6 +1,7 @@
 import logo from "./logo.svg";
 import "./App.css";
 import MyButton from "./MyButton";
+import MyInput from "./MyInput";
 
 function App() {
   return (
@@ -20,6 +21,8 @@ function App() {
         </a>
 
         <MyButton />
+
+        <MyInput />
       </header>
     </div>
   );
