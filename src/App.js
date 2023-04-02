@@ -22,6 +22,13 @@ function App() {
         >
           Delete
         </button>
+        <button
+          onClick={() => {
+            handleEditClick(device.id);
+          }}
+        >
+          Edit
+        </button>
       </li>
     );
   });
@@ -44,6 +51,19 @@ function App() {
     const newDevices = devices.filter((device) => {
       return device.id !== id;
     });
+    setDevices(newDevices);
+  }
+
+  function handleEditClick(id) {
+    const newDevices = devices.map((device) => {
+      if (device.id == id) {
+        let newDevice = { ...device, name: device.name + "0" };
+        return newDevice;
+      } else {
+        return device;
+      }
+    });
+
     setDevices(newDevices);
   }
 
