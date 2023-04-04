@@ -3,6 +3,8 @@ import Modal from "./Modal";
 import { useState } from "react";
 
 export default function LoanForm() {
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [showModal, setShowModal] = useState(false);
   const [loanInputs, setLoanInputs] = useState({
     name: "",
     phoneNumber: "",
@@ -13,7 +15,14 @@ export default function LoanForm() {
 
   function handleFormSubmit(event) {
     event.preventDefault();
-    alert("hello");
+    setErrorMessage(null);
+    const { age, phoneNumber } = loanInputs;
+    if (age < 18 || age > 100) {
+      setErrorMessage("The age is not allowed");
+    } else if (phoneNumber.length < 10 || phoneNumber.length > 12) {
+      setErrorMessage("Phone Number Fromat Is Incorrect");
+    }
+    setShowModal(true);
   }
 
   const btnIsDisabled =
@@ -21,8 +30,18 @@ export default function LoanForm() {
     loanInputs.age == "" ||
     loanInputs.phoneNumber == "";
 
+  function handleDivClick() {
+    console.log("div clicked");
+    if (showModal) {
+      setShowModal(false);
+    }
+  }
   return (
-    <div className="flex" style={{ flexDirection: "column" }}>
+    <div
+      onClick={handleDivClick}
+      className="flex"
+      style={{ flexDirection: "column" }}
+    >
       <form id="loan-form" className="flex" style={{ flexDirection: "column" }}>
         <h1>Requesting a Loan</h1>
         <hr></hr>
@@ -82,7 +101,7 @@ export default function LoanForm() {
         </button>
       </form>
 
-      {/* <Modal /> */}
+      <Modal errorMessage={errorMessage} isVisible={showModal} />
     </div>
   );
 }
