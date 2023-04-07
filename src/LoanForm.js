@@ -60,21 +60,21 @@ export default function LoanForm() {
         <hr></hr>
 
         <MyComponent
-          inputName="name"
-          handleChange={handleNameInputChange}
-          value={loanInputs.name}
+          inputName="dsfdsfds"
+          handleChangeComponent={handleNameInputChange}
+          valueComponent={loanInputs.name}
         />
 
         <MyComponent
           inputName="phone number"
-          handleChange={handlePhoneNumberInputChange}
-          value={loanInputs.phoneNumber}
+          handleChangeComponent={handlePhoneNumberInputChange}
+          valueComponent={loanInputs.phoneNumber}
         />
 
         <MyComponent
           inputName="Age:"
-          handleChange={handleAgeInputChange}
-          value={loanInputs.age}
+          handleChangeComponent={handleAgeInputChange}
+          valueComponent={loanInputs.age}
         />
 
         <label style={{ marginTop: "30px" }}>Are you an employee?</label>
