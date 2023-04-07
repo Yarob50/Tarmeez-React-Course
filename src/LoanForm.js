@@ -37,6 +37,18 @@ export default function LoanForm() {
       setShowModal(false);
     }
   }
+
+  function handlePhoneNumberInputChange(value) {
+    setLoanInputs({ ...loanInputs, phoneNumber: value });
+  }
+
+  function handleNameInputChange(value) {
+    setLoanInputs({ ...loanInputs, name: value });
+  }
+
+  function handleAgeInputChange(value) {
+    setLoanInputs({ ...loanInputs, age: value });
+  }
   return (
     <div
       onClick={handleDivClick}
@@ -47,33 +59,22 @@ export default function LoanForm() {
         <h1>Requesting a Loan</h1>
         <hr></hr>
 
-        <label>Name:</label>
-        <input
+        <MyComponent
+          inputName="name"
+          handleChange={handleNameInputChange}
           value={loanInputs.name}
-          onChange={(event) => {
-            setLoanInputs({ ...loanInputs, name: event.target.value });
-          }}
         />
 
         <MyComponent
-          currentInputs={loanInputs}
-          handleChange={setLoanInputs}
+          inputName="phone number"
+          handleChange={handlePhoneNumberInputChange}
           value={loanInputs.phoneNumber}
         />
-        {/* <label>Phone Number:</label>
-        <input
-          value={loanInputs.phoneNumber}
-          onChange={(event) => {
-            setLoanInputs({ ...loanInputs, phoneNumber: event.target.value });
-          }}
-        /> */}
 
-        <label>Age:</label>
-        <input
+        <MyComponent
+          inputName="Age:"
+          handleChange={handleAgeInputChange}
           value={loanInputs.age}
-          onChange={(event) => {
-            setLoanInputs({ ...loanInputs, age: event.target.value });
-          }}
         />
 
         <label style={{ marginTop: "30px" }}>Are you an employee?</label>

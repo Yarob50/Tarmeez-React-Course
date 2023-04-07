@@ -1,11 +1,11 @@
-export default function MyComponent({ value, handleChange, currentInputs }) {
+export default function MyComponent({ value, handleChange, inputName }) {
   return (
     <>
-      <label>Phone Number:</label>
+      <label>{inputName}</label>
       <input
         value={value}
         onChange={(event) => {
-          handleChange({ ...currentInputs, phoneNumber: event.target.value });
+          handleChange(event.target.value);
         }}
       />
     </>
