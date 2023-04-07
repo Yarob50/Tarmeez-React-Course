@@ -2,6 +2,7 @@ import "./FormStyles.css";
 import Modal from "./Modal";
 import { useState } from "react";
 import MyComponent from "./MyComponent";
+import { LoanInputContext } from "./contexts/LoanFormInputContext";
 
 export default function LoanForm() {
   const [errorMessage, setErrorMessage] = useState(null);
@@ -59,23 +60,35 @@ export default function LoanForm() {
         <h1>Requesting a Loan</h1>
         <hr></hr>
 
-        <MyComponent
-          inputName="dsfdsfds"
-          handleChangeComponent={handleNameInputChange}
-          valueComponent={loanInputs.name}
-        />
+        <LoanInputContext.Provider
+          value={{
+            value: loanInputs.name,
+            handleChange: handleNameInputChange,
+            labelTitle: "name",
+          }}
+        >
+          <MyComponent />
+        </LoanInputContext.Provider>
 
-        <MyComponent
-          inputName="phone number"
-          handleChangeComponent={handlePhoneNumberInputChange}
-          valueComponent={loanInputs.phoneNumber}
-        />
+        <LoanInputContext.Provider
+          value={{
+            value: loanInputs.phoneNumber,
+            handleChange: handlePhoneNumberInputChange,
+            labelTitle: "Phone Number",
+          }}
+        >
+          <MyComponent />
+        </LoanInputContext.Provider>
 
-        <MyComponent
-          inputName="Age:"
-          handleChangeComponent={handleAgeInputChange}
-          valueComponent={loanInputs.age}
-        />
+        <LoanInputContext.Provider
+          value={{
+            value: loanInputs.age,
+            handleChange: handleAgeInputChange,
+            labelTitle: "Age:",
+          }}
+        >
+          <MyComponent />
+        </LoanInputContext.Provider>
 
         <label style={{ marginTop: "30px" }}>Are you an employee?</label>
         <input
