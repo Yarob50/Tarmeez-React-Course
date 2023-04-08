@@ -3,12 +3,17 @@ import Modal from "./Modal";
 import { useState } from "react";
 import MyComponent from "./MyComponent";
 import { LoanInputContext } from "./contexts/LoanFormInputContext";
+import { useContext } from "react";
+import { UserContext } from "./contexts/UserContext";
 
 export default function LoanForm() {
+  const userData = useContext(UserContext);
   const [errorMessage, setErrorMessage] = useState(null);
   const [showModal, setShowModal] = useState(false);
+
+  const initialName = userData.name;
   const [loanInputs, setLoanInputs] = useState({
-    name: "",
+    name: initialName,
     phoneNumber: "",
     age: "",
     isEmployee: false,
@@ -56,6 +61,7 @@ export default function LoanForm() {
       className="flex"
       style={{ flexDirection: "column" }}
     >
+      <h1 style={{ color: "white" }}>Hello {userData.name}</h1>
       <form id="loan-form" className="flex" style={{ flexDirection: "column" }}>
         <h1>Requesting a Loan</h1>
         <hr></hr>

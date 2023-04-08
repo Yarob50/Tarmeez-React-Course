@@ -1,13 +1,18 @@
 import { useContext } from "react";
 import { LoanInputContext } from "./contexts/LoanFormInputContext";
+import { UserContext } from "./contexts/UserContext";
+
 export default function MyInput() {
   const inputContext = useContext(LoanInputContext);
+  const userData = useContext(UserContext);
 
   return (
     <>
       <div>
         <div></div>
-        <label>{inputContext.labelTitle}</label>
+        <label>
+          {userData.name} {inputContext.labelTitle}
+        </label>
         <input
           value={inputContext.value}
           onChange={(event) => {
