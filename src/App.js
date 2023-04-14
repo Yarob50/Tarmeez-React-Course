@@ -6,6 +6,10 @@ import Home from "./Home";
 import PostsList from "./PostsList";
 import PostDetails from "./PostDetails";
 import { postsContext } from "./contexts/postsContext";
+import NotFound from "./NotFound";
+import NewPost from "./NewPost";
+import DeletePost from "./DeletePost";
+import PostLayout from "./PostLayout";
 
 function App() {
   let postsData = [
@@ -45,10 +49,18 @@ function App() {
         </div>
         <Routes>
           <Route path="/hello" element={<Hello />} />
-          <Route path="/posts" element={<PostsList />} />
+
+          <Route path="/posts" element={<PostLayout />}>
+            <Route index element={<PostsList />} />
+            <Route path=":postId" element={<PostDetails />} />
+            <Route path="new" element={<NewPost />} />
+            <Route path="delete" element={<DeletePost />} />
+          </Route>
+
           <Route path="/" element={<Home />} />
           <Route path="/home" element={<Home />} />
-          <Route path="/postDetails/:postId" element={<PostDetails />} />
+
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
     </postsContext.Provider>
