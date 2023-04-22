@@ -23,7 +23,9 @@ import Todo from "./Todo";
 // OTHERS
 import { v4 as uuidv4 } from "uuid";
 
-const todos = [
+import { useState } from "react";
+
+const initialTodos = [
   {
     id: uuidv4(),
     title: "قراءة كتاب",
@@ -44,9 +46,24 @@ const todos = [
   },
 ];
 export default function TodoList() {
+  const [todos, setTodos] = useState(initialTodos);
+  const [titleInput, setTitleInput] = useState("");
+
   const todosJsx = todos.map((t) => {
     return <Todo key={t.id} title={t.title} details={t.details} />;
   });
+
+  function handleAddClick() {
+    const newTodo = {
+      id: uuidv4(),
+      title: titleInput,
+      details: "",
+      isCompleted: false,
+    };
+
+    setTodos([...todos, newTodo]);
+    setTitleInput("");
+  }
   return (
     <Container maxWidth="sm">
       <Card sx={{ minWidth: 275 }}>
@@ -87,6 +104,10 @@ export default function TodoList() {
                 id="outlined-basic"
                 label="عنوان المهمة"
                 variant="outlined"
+                value={titleInput}
+                onChange={(e) => {
+                  setTitleInput(e.target.value);
+                }}
               />
             </Grid>
 
@@ -99,6 +120,9 @@ export default function TodoList() {
               <Button
                 style={{ width: "100%", height: "100%" }}
                 variant="contained"
+                onClick={() => {
+                  handleAddClick();
+                }}
               >
                 إضافة
               </Button>
