@@ -56,3 +56,31 @@
   padding-top: 20px;
   box-shadow: 0px 7px 7px rgba(0,0,0,0.4);
 }
+
+
+/* ===== CUSTOM FONTS ====== */
+@font-face {
+  font-family: Alexandria;
+  src: url("../public/fonts/Alexandria-Regular.ttf");
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: Alexandria;
+  src: url("../public/fonts/Alexandria-Bold.ttf");
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: Alexandria;
+  src: url("../public/fonts/Alexandria-Black.ttf");
+  font-weight: 900;
+}
+
+@font-face {
+  font-family: Alexandria;
+  src: url("../public/fonts/Alexandria-Light.ttf");
+  font-weight: 200;
+}
+
+/* =====// CUSTOM FONTS //====== */

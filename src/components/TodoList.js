@@ -8,6 +8,8 @@ import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
+import Grid from "@mui/material/Unstable_Grid2";
+import TextField from "@mui/material/TextField";
 
 // ICONS
 import FormatAlignLeftIcon from "@mui/icons-material/FormatAlignLeft";
@@ -18,12 +20,40 @@ import FormatAlignJustifyIcon from "@mui/icons-material/FormatAlignJustify";
 // Components
 import Todo from "./Todo";
 
+// OTHERS
+import { v4 as uuidv4 } from "uuid";
+
+const todos = [
+  {
+    id: uuidv4(),
+    title: "قراءة كتاب",
+    details: "تيسمبتيس يتسبميتس بيمستب",
+    isCompleted: false,
+  },
+  {
+    id: uuidv4(),
+    title: "قراءة كتاب",
+    details: "تيسمبتيس يتسبميتس بيمستب",
+    isCompleted: false,
+  },
+  {
+    id: uuidv4(),
+    title: "قراءة كتاب",
+    details: "تيسمبتيس يتسبميتس بيمستب",
+    isCompleted: false,
+  },
+];
 export default function TodoList() {
+  const todosJsx = todos.map((t) => {
+    return <Todo key={t.id} title={t.title} details={t.details} />;
+  });
   return (
     <Container maxWidth="sm">
       <Card sx={{ minWidth: 275 }}>
         <CardContent>
-          <Typography variant="h2">مهامي</Typography>
+          <Typography variant="h2" style={{ fontWeight: "bold" }}>
+            مهامي
+          </Typography>
           <Divider />
 
           {/* FILTER BUTTONS */}
@@ -41,8 +71,40 @@ export default function TodoList() {
           {/* ==== FILTER BUTTON ==== */}
 
           {/* ALL TODOS */}
-          <Todo />
+          {todosJsx}
           {/* === ALL TODOS === */}
+
+          {/* INPUT + ADD BUTTON */}
+          <Grid container style={{ marginTop: "20px" }} spacing={2}>
+            <Grid
+              xs={8}
+              display="flex"
+              justifyContent="space-around"
+              alignItems="center"
+            >
+              <TextField
+                style={{ width: "100%" }}
+                id="outlined-basic"
+                label="عنوان المهمة"
+                variant="outlined"
+              />
+            </Grid>
+
+            <Grid
+              xs={4}
+              display="flex"
+              justifyContent="space-around"
+              alignItems="center"
+            >
+              <Button
+                style={{ width: "100%", height: "100%" }}
+                variant="contained"
+              >
+                إضافة
+              </Button>
+            </Grid>
+          </Grid>
+          {/*== INPUT + ADD BUTTON ==*/}
         </CardContent>
       </Card>
     </Container>
