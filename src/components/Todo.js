@@ -11,7 +11,20 @@ import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined
 import IconButton from "@mui/material/IconButton";
 import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
 
-export default function Todo({ title, details }) {
+import { useContext } from "react";
+import { TodosContext } from "../contexts/todosContext";
+
+export default function Todo({ todo, handleCheck }) {
+  const { todos, setTodos } = useContext(TodosContext);
+  function handleCheckClick() {
+    const updatedTodos = todos.map((t) => {
+      if (t.id == todo.id) {
+        t.isCompleted = !t.isCompleted;
+      }
+      return t;
+    });
+    setTodos(updatedTodos);
+  }
   return (
     <>
       <Card
@@ -27,11 +40,11 @@ export default function Todo({ title, details }) {
           <Grid container spacing={2}>
             <Grid xs={8}>
               <Typography variant="h5" sx={{ textAlign: "right" }}>
-                {title}
+                {todo.title}
               </Typography>
 
               <Typography variant="h6" sx={{ textAlign: "right" }}>
-                {details}
+                {todo.details}
               </Typography>
             </Grid>
 
@@ -42,17 +55,22 @@ export default function Todo({ title, details }) {
               justifyContent="space-around"
               alignItems="center"
             >
+              {/* CHECK ICON BUTTON */}
               <IconButton
+                onClick={() => {
+                  handleCheckClick();
+                }}
                 className="iconButton"
                 aria-label="delete"
                 style={{
-                  color: "#8bc34a",
-                  background: "white",
+                  color: todo.isCompleted ? "white" : "#8bc34a",
+                  background: todo.isCompleted ? "#8bc34a" : "white",
                   border: "solid #8bc34a 3px",
                 }}
               >
                 <CheckIcon />
               </IconButton>
+              {/*== CHECK ICON BUTTON ==*/}
 
               <IconButton
                 className="iconButton"

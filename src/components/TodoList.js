@@ -10,6 +10,7 @@ import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import Grid from "@mui/material/Unstable_Grid2";
 import TextField from "@mui/material/TextField";
+import { v4 as uuidv4 } from "uuid";
 
 // ICONS
 import FormatAlignLeftIcon from "@mui/icons-material/FormatAlignLeft";
@@ -21,36 +22,17 @@ import FormatAlignJustifyIcon from "@mui/icons-material/FormatAlignJustify";
 import Todo from "./Todo";
 
 // OTHERS
-import { v4 as uuidv4 } from "uuid";
-
+import { TodosContext } from "../contexts/todosContext";
+import { useContext } from "react";
 import { useState } from "react";
 
-const initialTodos = [
-  {
-    id: uuidv4(),
-    title: "قراءة كتاب",
-    details: "تيسمبتيس يتسبميتس بيمستب",
-    isCompleted: false,
-  },
-  {
-    id: uuidv4(),
-    title: "قراءة كتاب",
-    details: "تيسمبتيس يتسبميتس بيمستب",
-    isCompleted: false,
-  },
-  {
-    id: uuidv4(),
-    title: "قراءة كتاب",
-    details: "تيسمبتيس يتسبميتس بيمستب",
-    isCompleted: false,
-  },
-];
 export default function TodoList() {
-  const [todos, setTodos] = useState(initialTodos);
+  const { todos, setTodos } = useContext(TodosContext);
+
   const [titleInput, setTitleInput] = useState("");
 
   const todosJsx = todos.map((t) => {
-    return <Todo key={t.id} title={t.title} details={t.details} />;
+    return <Todo key={t.id} todo={t} />;
   });
 
   function handleAddClick() {
