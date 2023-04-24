@@ -29,8 +29,28 @@ export default function TodoList() {
   const { todos, setTodos } = useContext(TodosContext);
 
   const [titleInput, setTitleInput] = useState("");
+  const [displayedTodosType, setDisplayedTodosType] = useState("all");
 
-  const todosJsx = todos.map((t) => {
+  // filteration arrays
+  const completedTodos = todos.filter((t) => {
+    return t.isCompleted;
+  });
+
+  const notCompletedTodos = todos.filter((t) => {
+    return !t.isCompleted;
+  });
+
+  let todosToBeRendered = todos;
+
+  if (displayedTodosType == "completed") {
+    todosToBeRendered = completedTodos;
+  } else if (displayedTodosType == "non-completed") {
+    todosToBeRendered = notCompletedTodos;
+  } else {
+    todosToBeRendered = todos;
+  }
+
+  const todosJsx = todosToBeRendered.map((t) => {
     return <Todo key={t.id} todo={t} />;
   });
 
@@ -40,6 +60,9 @@ export default function TodoList() {
     setTodos(storageTodos);
   }, []);
 
+  function changeDisplayedType(e) {
+    setDisplayedTodosType(e.target.value);
+  }
   function handleAddClick() {
     const newTodo = {
       id: uuidv4(),
@@ -66,14 +89,14 @@ export default function TodoList() {
           {/* FILTER BUTTONS */}
           <ToggleButtonGroup
             style={{ direction: "ltr", marginTop: "30px" }}
-            // value={alignment}
+            value={displayedTodosType}
             exclusive
-            // onChange={handleAlignment}
+            onChange={changeDisplayedType}
             aria-label="text alignment"
           >
-            <ToggleButton value="right">غير المنجز</ToggleButton>
-            <ToggleButton value="center">المنجز</ToggleButton>
-            <ToggleButton value="left">الكل</ToggleButton>
+            <ToggleButton value="non-completed">غير المنجز</ToggleButton>
+            <ToggleButton value="completed">المنجز</ToggleButton>
+            <ToggleButton value="all">الكل</ToggleButton>
           </ToggleButtonGroup>
           {/* ==== FILTER BUTTON ==== */}
 
