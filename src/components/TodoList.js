@@ -79,7 +79,13 @@ export default function TodoList() {
 
   return (
     <Container maxWidth="sm">
-      <Card sx={{ minWidth: 275 }}>
+      <Card
+        sx={{ minWidth: 275 }}
+        style={{
+          maxHeight: "80vh",
+          overflow: "scroll",
+        }}
+      >
         <CardContent>
           <Typography variant="h2" style={{ fontWeight: "bold" }}>
             مهامي
@@ -93,6 +99,7 @@ export default function TodoList() {
             exclusive
             onChange={changeDisplayedType}
             aria-label="text alignment"
+            color="primary"
           >
             <ToggleButton value="non-completed">غير المنجز</ToggleButton>
             <ToggleButton value="completed">المنجز</ToggleButton>
@@ -136,6 +143,7 @@ export default function TodoList() {
                 onClick={() => {
                   handleAddClick();
                 }}
+                disabled={titleInput.length == 0}
               >
                 إضافة
               </Button>
