@@ -40,6 +40,7 @@ export default function Todo({ todo, handleCheck }) {
       return t;
     });
     setTodos(updatedTodos);
+    localStorage.setItem("todos", JSON.stringify(updatedTodos));
   }
 
   function handleDeleteClick() {
@@ -64,6 +65,7 @@ export default function Todo({ todo, handleCheck }) {
     });
 
     setTodos(updatedTodos);
+    localStorage.setItem("todos", JSON.stringify(updatedTodos));
   }
 
   function handleUpdateConfirm() {
@@ -77,6 +79,7 @@ export default function Todo({ todo, handleCheck }) {
 
     setTodos(updatedTodos);
     setShowUpdateDialog(false);
+    localStorage.setItem("todos", JSON.stringify(updatedTodos));
   }
 
   // ====== EVENT HANDLERS ======
