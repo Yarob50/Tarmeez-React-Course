@@ -23,135 +23,145 @@ import Todo from "./Todo";
 
 // OTHERS
 import { TodosContext } from "../contexts/todosContext";
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect, useMemo } from "react";
 
 export default function TodoList() {
-  const { todos, setTodos } = useContext(TodosContext);
+	console.log("re render");
+	const { todos, setTodos } = useContext(TodosContext);
 
-  const [titleInput, setTitleInput] = useState("");
-  const [displayedTodosType, setDisplayedTodosType] = useState("all");
+	const [titleInput, setTitleInput] = useState("");
+	const [displayedTodosType, setDisplayedTodosType] = useState("all");
 
-  // filteration arrays
-  const completedTodos = todos.filter((t) => {
-    return t.isCompleted;
-  });
+	// filteration arrays
 
-  const notCompletedTodos = todos.filter((t) => {
-    return !t.isCompleted;
-  });
+	const completedTodos = useMemo(() => {
+		return todos.filter((t) => {
+			console.log("calling completed todos");
+			return t.isCompleted;
+		});
+	}, [todos]);
 
-  let todosToBeRendered = todos;
+	const notCompletedTodos = useMemo(() => {
+		return todos.filter((t) => {
+			console.log("calling not completed todos");
+			return !t.isCompleted;
+		});
+	}, [todos]);
 
-  if (displayedTodosType == "completed") {
-    todosToBeRendered = completedTodos;
-  } else if (displayedTodosType == "non-completed") {
-    todosToBeRendered = notCompletedTodos;
-  } else {
-    todosToBeRendered = todos;
-  }
+	let todosToBeRendered = todos;
 
-  const todosJsx = todosToBeRendered.map((t) => {
-    return <Todo key={t.id} todo={t} />;
-  });
+	if (displayedTodosType == "completed") {
+		todosToBeRendered = completedTodos;
+	} else if (displayedTodosType == "non-completed") {
+		todosToBeRendered = notCompletedTodos;
+	} else {
+		todosToBeRendered = todos;
+	}
 
-  useEffect(() => {
-    console.log("calling use effect");
-    const storageTodos = JSON.parse(localStorage.getItem("todos")) ?? [];
-    setTodos(storageTodos);
-  }, []);
+	const todosJsx = todosToBeRendered.map((t) => {
+		return <Todo key={t.id} todo={t} />;
+	});
 
-  function changeDisplayedType(e) {
-    setDisplayedTodosType(e.target.value);
-  }
-  function handleAddClick() {
-    const newTodo = {
-      id: uuidv4(),
-      title: titleInput,
-      details: "",
-      isCompleted: false,
-    };
+	useEffect(() => {
+		console.log("calling use effect");
+		const storageTodos = JSON.parse(localStorage.getItem("todos")) ?? [];
+		setTodos(storageTodos);
+	}, []);
 
-    const updatedTodos = [...todos, newTodo];
-    setTodos(updatedTodos);
-    localStorage.setItem("todos", JSON.stringify(updatedTodos));
-    setTitleInput("");
-  }
+	function changeDisplayedType(e) {
+		setDisplayedTodosType(e.target.value);
+	}
+	function handleAddClick() {
+		const newTodo = {
+			id: uuidv4(),
+			title: titleInput,
+			details: "",
+			isCompleted: false,
+		};
 
-  return (
-    <Container maxWidth="sm">
-      <Card
-        sx={{ minWidth: 275 }}
-        style={{
-          maxHeight: "80vh",
-          overflow: "scroll",
-        }}
-      >
-        <CardContent>
-          <Typography variant="h2" style={{ fontWeight: "bold" }}>
-            مهامي
-          </Typography>
-          <Divider />
+		const updatedTodos = [...todos, newTodo];
+		setTodos(updatedTodos);
+		localStorage.setItem("todos", JSON.stringify(updatedTodos));
+		setTitleInput("");
+	}
 
-          {/* FILTER BUTTONS */}
-          <ToggleButtonGroup
-            style={{ direction: "ltr", marginTop: "30px" }}
-            value={displayedTodosType}
-            exclusive
-            onChange={changeDisplayedType}
-            aria-label="text alignment"
-            color="primary"
-          >
-            <ToggleButton value="non-completed">غير المنجز</ToggleButton>
-            <ToggleButton value="completed">المنجز</ToggleButton>
-            <ToggleButton value="all">الكل</ToggleButton>
-          </ToggleButtonGroup>
-          {/* ==== FILTER BUTTON ==== */}
+	return (
+		<Container maxWidth="sm">
+			<Card
+				sx={{ minWidth: 275 }}
+				style={{
+					maxHeight: "80vh",
+					overflow: "scroll",
+				}}
+			>
+				<CardContent>
+					<Typography variant="h2" style={{ fontWeight: "bold" }}>
+						مهامي
+					</Typography>
+					<Divider />
 
-          {/* ALL TODOS */}
-          {todosJsx}
-          {/* === ALL TODOS === */}
+					{/* FILTER BUTTONS */}
+					<ToggleButtonGroup
+						style={{ direction: "ltr", marginTop: "30px" }}
+						value={displayedTodosType}
+						exclusive
+						onChange={changeDisplayedType}
+						aria-label="text alignment"
+						color="primary"
+					>
+						<ToggleButton value="non-completed">
+							غير المنجز
+						</ToggleButton>
+						<ToggleButton value="completed">المنجز</ToggleButton>
+						<ToggleButton value="all">الكل</ToggleButton>
+					</ToggleButtonGroup>
+					{/* ==== FILTER BUTTON ==== */}
 
-          {/* INPUT + ADD BUTTON */}
-          <Grid container style={{ marginTop: "20px" }} spacing={2}>
-            <Grid
-              xs={8}
-              display="flex"
-              justifyContent="space-around"
-              alignItems="center"
-            >
-              <TextField
-                style={{ width: "100%" }}
-                id="outlined-basic"
-                label="عنوان المهمة"
-                variant="outlined"
-                value={titleInput}
-                onChange={(e) => {
-                  setTitleInput(e.target.value);
-                }}
-              />
-            </Grid>
+					{/* ALL TODOS */}
+					{todosJsx}
+					{/* === ALL TODOS === */}
 
-            <Grid
-              xs={4}
-              display="flex"
-              justifyContent="space-around"
-              alignItems="center"
-            >
-              <Button
-                style={{ width: "100%", height: "100%" }}
-                variant="contained"
-                onClick={() => {
-                  handleAddClick();
-                }}
-                disabled={titleInput.length == 0}
-              >
-                إضافة
-              </Button>
-            </Grid>
-          </Grid>
-          {/*== INPUT + ADD BUTTON ==*/}
-        </CardContent>
-      </Card>
-    </Container>
-  );
+					{/* INPUT + ADD BUTTON */}
+					<Grid container style={{ marginTop: "20px" }} spacing={2}>
+						<Grid
+							xs={8}
+							display="flex"
+							justifyContent="space-around"
+							alignItems="center"
+						>
+							<TextField
+								style={{ width: "100%" }}
+								id="outlined-basic"
+								label="عنوان المهمة"
+								variant="outlined"
+								value={titleInput}
+								onChange={(e) => {
+									setTitleInput(e.target.value);
+								}}
+							/>
+						</Grid>
+
+						<Grid
+							xs={4}
+							display="flex"
+							justifyContent="space-around"
+							alignItems="center"
+						>
+							<Button
+								style={{ width: "100%", height: "100%" }}
+								variant="contained"
+								onClick={() => {
+									handleAddClick();
+								}}
+								disabled={titleInput.length == 0}
+							>
+								إضافة
+							</Button>
+						</Grid>
+					</Grid>
+					{/*== INPUT + ADD BUTTON ==*/}
+				</CardContent>
+			</Card>
+		</Container>
+	);
 }
