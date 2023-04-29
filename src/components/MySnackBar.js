@@ -10,7 +10,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 	return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-export default function MySnackBar({ open }) {
+export default function MySnackBar({ open, message }) {
 	const action = (
 		<React.Fragment>
 			<IconButton size="small" aria-label="close" color="inherit">
@@ -29,7 +29,7 @@ export default function MySnackBar({ open }) {
 					action={action}
 				>
 					<Alert severity="success" sx={{ width: "100%" }}>
-						This is a success message!
+						{message}
 					</Alert>
 				</Snackbar>
 			</Stack>

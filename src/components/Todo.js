@@ -14,6 +14,7 @@ import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutl
 
 import { useContext, useState } from "react";
 import { TodosContext } from "../contexts/todosContext";
+import { ToastContext } from "../contexts/ToastContext";
 
 // DIALOG IMPORTS
 import Dialog from "@mui/material/Dialog";
@@ -28,6 +29,7 @@ export default function Todo({ todo, showDelete, showUpdate }) {
 		details: todo.details,
 	});
 	const { todos, setTodos } = useContext(TodosContext);
+	const { showHideToast } = useContext(ToastContext);
 
 	// EVENT HANDLERS
 	function handleCheckClick() {
@@ -39,6 +41,7 @@ export default function Todo({ todo, showDelete, showUpdate }) {
 		});
 		setTodos(updatedTodos);
 		localStorage.setItem("todos", JSON.stringify(updatedTodos));
+		showHideToast("تم التعديل بنجاح");
 	}
 
 	function handleDeleteClick() {

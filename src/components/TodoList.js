@@ -30,11 +30,13 @@ import DialogTitle from "@mui/material/DialogTitle";
 
 // OTHERS
 import { TodosContext } from "../contexts/todosContext";
+import { ToastContext } from "../contexts/ToastContext";
 import { useContext, useState, useEffect, useMemo } from "react";
 
 export default function TodoList() {
 	console.log("re render");
 	const { todos, setTodos } = useContext(TodosContext);
+	const { showHideToast } = useContext(ToastContext);
 
 	const [dialogTodo, setDialogTodo] = useState(null);
 	const [showDeleteDialog, setShowDeleteDialog] = useState(false);
@@ -91,6 +93,7 @@ export default function TodoList() {
 		setTodos(updatedTodos);
 		localStorage.setItem("todos", JSON.stringify(updatedTodos));
 		setTitleInput("");
+		showHideToast("تمت الإضافة بنجاح");
 	}
 
 	function openDeleteDialog(todo) {
@@ -114,6 +117,7 @@ export default function TodoList() {
 		setTodos(updatedTodos);
 		localStorage.setItem("todos", JSON.stringify(updatedTodos));
 		setShowDeleteDialog(false);
+		showHideToast("تم الحذف بنجاح");
 	}
 
 	function handleUpdateClose() {
@@ -136,6 +140,7 @@ export default function TodoList() {
 		setTodos(updatedTodos);
 		setShowUpdateDialog(false);
 		localStorage.setItem("todos", JSON.stringify(updatedTodos));
+		showHideToast("تم التحديث بنجاح");
 	}
 
 	const todosJsx = todosToBeRendered.map((t) => {
