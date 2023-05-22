@@ -30,13 +30,13 @@ import DialogTitle from "@mui/material/DialogTitle";
 
 // OTHERS
 import { TodosContext } from "../contexts/todosContext";
-import { ToastContext } from "../contexts/ToastContext";
+import { useToast } from "../contexts/ToastContext";
 import { useContext, useState, useEffect, useMemo } from "react";
 
 export default function TodoList() {
 	console.log("re render");
 	const { todos, setTodos } = useContext(TodosContext);
-	const { showHideToast } = useContext(ToastContext);
+	const { showHideToast } = useToast();
 
 	const [dialogTodo, setDialogTodo] = useState(null);
 	const [showDeleteDialog, setShowDeleteDialog] = useState(false);
