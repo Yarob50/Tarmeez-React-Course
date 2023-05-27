@@ -22,4 +22,6 @@ export const ToastProvider = ({ children }) => {
 	);
 };
 
-export const useToast = useContext(ToastContext);
+export const useToast = () => {
+	return useContext(ToastContext);
+};
