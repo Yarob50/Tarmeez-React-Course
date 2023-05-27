@@ -29,16 +29,16 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 
 // OTHERS
-import { TodosContext } from "../contexts/todosContext";
+import { useTodos } from "../contexts/todosContext";
 import { useToast } from "../contexts/ToastContext";
-import { useContext, useState, useEffect, useMemo, useReducer } from "react";
+import { useState, useEffect, useMemo, useReducer } from "react";
 import todosReducer from "../reducers/todosReducer";
 
+// import { TodosContext } from "../contexts/todosContext";
 export default function TodoList() {
 	console.log("re render");
-	const { todos2, setTodos } = useContext(TodosContext);
 
-	const [todos, dispatch] = useReducer(todosReducer, []);
+	const { todos, dispatch } = useTodos();
 	const { showHideToast } = useToast();
 
 	const [dialogTodo, setDialogTodo] = useState(null);
@@ -74,9 +74,7 @@ export default function TodoList() {
 	}
 
 	useEffect(() => {
-		console.log("calling use effect");
-		const storageTodos = JSON.parse(localStorage.getItem("todos")) ?? [];
-		setTodos(storageTodos);
+		dispatch({ type: "get" });
 	}, []);
 
 	// ===== HANDLERS
@@ -105,11 +103,7 @@ export default function TodoList() {
 	}
 
 	function handleDeleteConfirm() {
-		const updatedTodos = todos.filter((t) => {
-			return t.id != dialogTodo.id;
-		});
-		setTodos(updatedTodos);
-		localStorage.setItem("todos", JSON.stringify(updatedTodos));
+		dispatch({ type: "deleted", payload: dialogTodo });
 		setShowDeleteDialog(false);
 		showHideToast("تم الحذف بنجاح");
 	}
@@ -119,21 +113,8 @@ export default function TodoList() {
 	}
 
 	function handleUpdateConfirm() {
-		const updatedTodos = todos.map((t) => {
-			if (t.id == dialogTodo.id) {
-				return {
-					...t,
-					title: dialogTodo.title,
-					details: dialogTodo.details,
-				};
-			} else {
-				return t;
-			}
-		});
-
-		setTodos(updatedTodos);
+		dispatch({ type: "updated", payload: dialogTodo });
 		setShowUpdateDialog(false);
-		localStorage.setItem("todos", JSON.stringify(updatedTodos));
 		showHideToast("تم التحديث بنجاح");
 	}
 

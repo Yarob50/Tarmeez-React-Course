@@ -13,7 +13,7 @@ import IconButton from "@mui/material/IconButton";
 import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
 
 import { useContext, useState } from "react";
-import { TodosContext } from "../contexts/todosContext";
+import { useTodos } from "../contexts/todosContext";
 import { useToast } from "../contexts/ToastContext";
 
 // DIALOG IMPORTS
@@ -28,20 +28,14 @@ export default function Todo({ todo, showDelete, showUpdate }) {
 		title: todo.title,
 		details: todo.details,
 	});
-	const { todos, setTodos } = useContext(TodosContext);
+
+	const { todos, dispatch } = useTodos();
 	const { showHideToast } = useToast();
 	// const { showHideToast } = useContext(ToastContext);
 
 	// EVENT HANDLERS
 	function handleCheckClick() {
-		const updatedTodos = todos.map((t) => {
-			if (t.id == todo.id) {
-				t.isCompleted = !t.isCompleted;
-			}
-			return t;
-		});
-		setTodos(updatedTodos);
-		localStorage.setItem("todos", JSON.stringify(updatedTodos));
+		dispatch({ type: "toggledCompleted", payload: todo });
 		showHideToast("تم التعديل بنجاح");
 	}
 
