@@ -12,24 +12,11 @@ import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined
 import IconButton from "@mui/material/IconButton";
 import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
 
-import { useContext, useState } from "react";
-import { useTodos } from "../contexts/todosContext";
+import { useTodosDispatch } from "../contexts/todosContext";
 import { useToast } from "../contexts/ToastContext";
 
-// DIALOG IMPORTS
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-
 export default function Todo({ todo, showDelete, showUpdate }) {
-	const [updatedTodo, setUpdatedTodo] = useState({
-		title: todo.title,
-		details: todo.details,
-	});
-
-	const { todos, dispatch } = useTodos();
+	const dispatch = useTodosDispatch();
 	const { showHideToast } = useToast();
 	// const { showHideToast } = useContext(ToastContext);
 

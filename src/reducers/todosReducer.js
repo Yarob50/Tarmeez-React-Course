@@ -53,14 +53,16 @@ export default function reducer(currentTodos, action) {
 		case "toggledCompleted": {
 			const updatedTodos = currentTodos.map((t) => {
 				if (t.id == action.payload.id) {
-					t.isCompleted = !t.isCompleted;
+					const updatedTodo = {
+						...t,
+						isCompleted: !t.isCompleted,
+					};
+					return updatedTodo;
 				}
 				return t;
 			});
 			localStorage.setItem("todos", JSON.stringify(updatedTodos));
 			return updatedTodos;
-
-			return currentTodos;
 		}
 
 		default: {

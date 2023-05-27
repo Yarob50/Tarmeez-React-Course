@@ -2,19 +2,24 @@ import { useReducer, createContext, useContext } from "react";
 import todosReducer from "../reducers/todosReducer";
 
 export const TodosContext = createContext([]);
+export const DispatchContext = createContext(null);
 
 const TodosProvider = ({ children }) => {
-	const [todos, todosDispatch] = useReducer(todosReducer, []);
+	const [todos, dispatch] = useReducer(todosReducer, []);
 	return (
-		<TodosContext.Provider
-			value={{ todos: todos, dispatch: todosDispatch }}
-		>
-			{children}
+		<TodosContext.Provider value={todos}>
+			<DispatchContext.Provider value={dispatch}>
+				{children}
+			</DispatchContext.Provider>
 		</TodosContext.Provider>
 	);
 };
 
 export const useTodos = () => {
+	return useContext(TodosContext);
+};
+
+export const useTodosDispatch = () => {
 	return useContext(TodosContext);
 };
 

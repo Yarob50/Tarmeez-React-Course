@@ -29,7 +29,7 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 
 // OTHERS
-import { useTodos } from "../contexts/todosContext";
+import { useTodos, useTodosDispatch } from "../contexts/todosContext";
 import { useToast } from "../contexts/ToastContext";
 import { useState, useEffect, useMemo, useReducer } from "react";
 import todosReducer from "../reducers/todosReducer";
@@ -38,7 +38,8 @@ import todosReducer from "../reducers/todosReducer";
 export default function TodoList() {
 	console.log("re render");
 
-	const { todos, dispatch } = useTodos();
+	const todos = useTodos();
+	const dispatch = useTodosDispatch();
 	const { showHideToast } = useToast();
 
 	const [dialogTodo, setDialogTodo] = useState(null);
