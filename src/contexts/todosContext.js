@@ -20,7 +20,7 @@ export const useTodos = () => {
 };
 
 export const useTodosDispatch = () => {
-	return useContext(TodosContext);
+	return useContext(DispatchContext);
 };
 
 export default TodosProvider;
