@@ -16,6 +16,7 @@ import Button from "@mui/material/Button";
 import axios from "axios";
 import moment from "moment";
 import "moment/min/locales";
+import { useTranslation } from "react-i18next";
 moment.locale("ar");
 
 const theme = createTheme({
@@ -27,6 +28,8 @@ const theme = createTheme({
 let cancelAxios = null;
 
 function App() {
+	const { t, i18n } = useTranslation();
+
 	const [dateAndTime, setDateAndTime] = useState("");
 	const [temp, setTemp] = useState({
 		number: null,
@@ -37,6 +40,7 @@ function App() {
 	});
 	useEffect(() => {
 		setDateAndTime(moment().format("MMMM Do YYYY, h:mm:ss a"));
+
 		axios
 			.get(
 				"https://api.openweathermap.org/data/2.5/weather?lat=24.7&lon=46.5&appid=495375859304beffd9af4c94d66e02fc",
@@ -75,6 +79,10 @@ function App() {
 			console.log("canceling");
 			cancelAxios();
 		};
+	}, []);
+
+	useEffect(() => {
+		i18n.changeLanguage("ar");
 	}, []);
 	return (
 		<div className="App">
@@ -120,7 +128,7 @@ function App() {
 											fontWeight: "600",
 										}}
 									>
-										الرياض
+										{t("Riyadh")}
 									</Typography>
 
 									<Typography
