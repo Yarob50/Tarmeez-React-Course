@@ -14,6 +14,9 @@ import Button from "@mui/material/Button";
 
 // EXTERNAL LIBRARIES
 import axios from "axios";
+import moment from "moment";
+import "moment/min/locales";
+moment.locale("ar");
 
 const theme = createTheme({
 	typography: {
@@ -24,7 +27,7 @@ const theme = createTheme({
 let cancelAxios = null;
 
 function App() {
-	console.log("rednering the componenting (mounting)");
+	const [dateAndTime, setDateAndTime] = useState("");
 	const [temp, setTemp] = useState({
 		number: null,
 		description: "",
@@ -33,6 +36,7 @@ function App() {
 		icon: null,
 	});
 	useEffect(() => {
+		setDateAndTime(moment().format("MMMM Do YYYY, h:mm:ss a"));
 		axios
 			.get(
 				"https://api.openweathermap.org/data/2.5/weather?lat=24.7&lon=46.5&appid=495375859304beffd9af4c94d66e02fc",
@@ -123,7 +127,7 @@ function App() {
 										variant="h5"
 										style={{ marginRight: "20px" }}
 									>
-										الإثنين ١٠-١٠-٢٠٤٠
+										{dateAndTime}
 									</Typography>
 								</div>
 								{/* == CITY & TIME == */}
