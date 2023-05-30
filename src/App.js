@@ -31,6 +31,7 @@ let cancelAxios = null;
 function App() {
 	const { t, i18n } = useTranslation();
 
+	// ======== STATES ========= //
 	const [dateAndTime, setDateAndTime] = useState("");
 	const [temp, setTemp] = useState({
 		number: null,
@@ -39,9 +40,24 @@ function App() {
 		max: null,
 		icon: null,
 	});
+	const [locale, setLocale] = useState("ar");
 
+	// ======== EVENT HANDLERS ========= //
+	function handleLanguageClick() {
+		if (locale == "en") {
+			setLocale("ar");
+			i18n.changeLanguage("ar");
+			moment.locale("ar");
+		} else {
+			setLocale("en");
+			i18n.changeLanguage("en");
+			moment.locale("en");
+		}
+
+		setDateAndTime(moment().format("MMMM Do YYYY, h:mm:ss a"));
+	}
 	useEffect(() => {
-		i18n.changeLanguage("ar");
+		i18n.changeLanguage(locale);
 	}, []);
 	useEffect(() => {
 		setDateAndTime(moment().format("MMMM Do YYYY, h:mm:ss a"));
@@ -128,7 +144,7 @@ function App() {
 											fontWeight: "600",
 										}}
 									>
-										{t("hello world")}
+										{t("Riyadh")}
 									</Typography>
 
 									<Typography
@@ -171,7 +187,7 @@ function App() {
 										{/*== TEMP ==*/}
 
 										<Typography variant="h6">
-											{temp.description}
+											{t(temp.description)}
 										</Typography>
 
 										{/* MIN & MAX */}
@@ -182,11 +198,15 @@ function App() {
 												alignItems: "center",
 											}}
 										>
-											<h5>الصغرى: {temp.min}</h5>
+											<h5>
+												{t("min")}: {temp.min}
+											</h5>
 											<h5 style={{ margin: "0px 5px" }}>
 												|
 											</h5>
-											<h5>الكبرى: {temp.max}</h5>
+											<h5>
+												{t("max")}: {temp.max}
+											</h5>
 										</div>
 									</div>
 									{/*== DEGREE & DESCRIPTION ==*/}
@@ -214,8 +234,12 @@ function App() {
 								marginTop: "20px",
 							}}
 						>
-							<Button style={{ color: "white" }} variant="text">
-								إنجليزي
+							<Button
+								style={{ color: "white" }}
+								variant="text"
+								onClick={handleLanguageClick}
+							>
+								{locale == "en" ? "Arabic" : "إنجليزي"}
 							</Button>
 						</div>
 						{/*== TRANSLATION CONTAINER ==*/}
