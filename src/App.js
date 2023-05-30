@@ -81,9 +81,6 @@ function App() {
 		};
 	}, []);
 
-	useEffect(() => {
-		i18n.changeLanguage("ar");
-	}, []);
 	return (
 		<div className="App">
 			<ThemeProvider theme={theme}>
@@ -128,7 +125,7 @@ function App() {
 											fontWeight: "600",
 										}}
 									>
-										{t("Riyadh")}
+										الرياض
 									</Typography>
 
 									<Typography
