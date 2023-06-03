@@ -16,12 +16,13 @@ export const calcSlice = createSlice({
 			currentState.result = sum;
 		},
 
-		printHello: (currentState, action) => {
-			console.log("hello", currentState, action);
+		subtract: (currentState, action) => {
+			const { firstNumber, secondNumber } = action.payload;
+			currentState.result = firstNumber - secondNumber;
 		},
 	},
 });
 
-export const { add, printHello } = calcSlice.actions;
+export const { add, subtract } = calcSlice.actions;
 
 export default calcSlice.reducer;
