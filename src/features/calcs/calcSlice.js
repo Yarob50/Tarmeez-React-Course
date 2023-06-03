@@ -20,9 +20,19 @@ export const calcSlice = createSlice({
 			const { firstNumber, secondNumber } = action.payload;
 			currentState.result = firstNumber - secondNumber;
 		},
+
+		mult: (currentState, action) => {
+			const { firstNumber, secondNumber } = action.payload;
+			currentState.result = firstNumber * secondNumber;
+		},
+
+		div: (currentState, action) => {
+			const { firstNumber, secondNumber } = action.payload;
+			currentState.result = firstNumber / secondNumber;
+		},
 	},
 });
 
-export const { add, subtract } = calcSlice.actions;
+export const { add, subtract, mult, div } = calcSlice.actions;
 
 export default calcSlice.reducer;

@@ -5,7 +5,7 @@ import { useState } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
 
-import { add, subtract } from "./features/calcs/calcSlice";
+import { add, subtract, mult, div } from "./features/calcs/calcSlice";
 
 function App() {
 	const resultState = useSelector((state) => {
@@ -44,13 +44,21 @@ function App() {
 	}
 
 	function handleMultClick() {
-		const result = Number(firstNumberInput) * Number(secondNumberInput);
-		setResult(result);
+		dispatch(
+			mult({
+				firstNumber: firstNumberInput,
+				secondNumber: secondNumberInput,
+			})
+		);
 	}
 
 	function handleDivClick() {
-		const result = Number(firstNumberInput) / Number(secondNumberInput);
-		setResult(result);
+		dispatch(
+			div({
+				firstNumber: firstNumberInput,
+				secondNumber: secondNumberInput,
+			})
+		);
 	}
 
 	return (
