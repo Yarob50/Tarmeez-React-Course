@@ -11,6 +11,7 @@ import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import CloudIcon from "@mui/icons-material/Cloud";
 import Button from "@mui/material/Button";
+import CircularProgress from "@mui/material/CircularProgress";
 
 // EXTERNAL LIBRARIES
 import axios from "axios";
@@ -21,6 +22,7 @@ import { useTranslation } from "react-i18next";
 // REDUX IMPORT
 import { useSelector, useDispatch } from "react-redux";
 import { changeResult } from "./weatherApiSlice";
+import { fetchWeather } from "./weatherApiSlice";
 
 moment.locale("ar");
 
@@ -38,6 +40,12 @@ function App() {
 	const result = useSelector((state) => {
 		console.log("the state is ", state);
 		return state.result;
+	});
+
+	const isLoading = useSelector((state) => {
+		console.log("============");
+		console.log(state);
+		return state.weather.isLoading;
 	});
 
 	const { t, i18n } = useTranslation();
@@ -70,7 +78,10 @@ function App() {
 	}
 	useEffect(() => {
 		// trying redux
-		dispatch(changeResult());
+		// dispatch(changeResult());
+
+		console.log("dispatching fetch weather from the component");
+		dispatch(fetchWeather());
 
 		i18n.changeLanguage(locale);
 	}, []);
@@ -190,6 +201,14 @@ function App() {
 												alignItems: "center",
 											}}
 										>
+											{isLoading ? (
+												<CircularProgress
+													style={{ color: "white" }}
+												/>
+											) : (
+												""
+											)}
+
 											<Typography
 												variant="h1"
 												style={{ textAlign: "right" }}
