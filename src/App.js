@@ -18,6 +18,10 @@ import moment from "moment";
 import "moment/min/locales";
 import { useTranslation } from "react-i18next";
 
+// REDUX IMPORT
+import { useSelector, useDispatch } from "react-redux";
+import { changeResult } from "./weatherApiSlice";
+
 moment.locale("ar");
 
 const theme = createTheme({
@@ -29,6 +33,13 @@ const theme = createTheme({
 let cancelAxios = null;
 
 function App() {
+	// REDUX CODE
+	const dispatch = useDispatch();
+	const result = useSelector((state) => {
+		console.log("the state is ", state);
+		return state.result;
+	});
+
 	const { t, i18n } = useTranslation();
 
 	// ======== STATES ========= //
@@ -58,13 +69,16 @@ function App() {
 		setDateAndTime(moment().format("MMMM Do YYYY, h:mm:ss a"));
 	}
 	useEffect(() => {
+		// trying redux
+		dispatch(changeResult());
+
 		i18n.changeLanguage(locale);
 	}, []);
 	useEffect(() => {
 		setDateAndTime(moment().format("MMMM Do YYYY, h:mm:ss a"));
 		axios
 			.get(
-				"https://api.openweathermap.org/data/2.5/weather?lat=24.7&lon=46.5&appid=495375859304beffd9af4c94d66e02fc",
+				"https://api.openweathermap.org/data/2.5/weather?lat=24.7&lon=46.5&appid=2c511dc8a04616514a9e1ff2f31c8043",
 				{
 					cancelToken: new axios.CancelToken((c) => {
 						cancelAxios = c;
