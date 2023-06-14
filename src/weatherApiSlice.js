@@ -29,6 +29,14 @@ export const fetchWeather = createAsyncThunk(
 		// 	description: description,
 		// 	icon: `https://openweathermap.org/img/wn/${responseIcon}@2x.png`,
 		// });
+
+		return {
+			number: responseTemp,
+			min,
+			max,
+			description,
+			icon: `https://openweathermap.org/img/wn/${responseIcon}@2x.png`,
+		};
 	}
 );
 const weatherApiSlice = createSlice({
@@ -49,12 +57,14 @@ const weatherApiSlice = createSlice({
 	extraReducers(builder) {
 		builder
 			.addCase(fetchWeather.pending, (state, action) => {
-				console.log("============");
-				console.log(state, action);
 				state.isLoading = true;
 			})
 			.addCase(fetchWeather.fulfilled, (state, action) => {
 				state.isLoading = false;
+				console.log("============**********");
+
+				console.log(state, action);
+				state.weather = action.payload;
 			})
 			.addCase(fetchWeather.rejected, (state, action) => {
 				state.isLoading = false;
